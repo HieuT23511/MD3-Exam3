@@ -32,7 +32,7 @@ class HomeStayController {
         let query = qs.parse(url.parse(req.url).query);
         if (query.id && req.method === 'GET') {
             let data = await homestayModel.getDetailHomestay(+query.id);
-            let {id, name, bedrooms, wcrooms, price, decribeHomestay, city} = data[0];
+            let {id, name, bedrooms, wcrooms, price, describeHomestay, city} = data[0];
             let html = await BaseController.readFileData('./src/views/detailsHomestay.html');
             let newHtml = '';
             newHtml += `<button class='btn btn-primary'><a href='/update?id=${id}'class="text-decoration-none" style="color: white;">Sửa</a></button>
@@ -43,7 +43,7 @@ class HomeStayController {
             html = html.replace('{bedrooms}', bedrooms);
             html = html.replace('{wcrooms}', wcrooms);
             html = html.replace('{price}', price);
-            html = html.replace('{descript}', decribeHomestay);
+            html = html.replace('{descript}', describeHomestay);
             html = html.replace('{btn-content}', newHtml);
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write(html);
