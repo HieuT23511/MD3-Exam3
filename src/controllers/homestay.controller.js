@@ -50,5 +50,27 @@ class HomeStayController {
             res.end();
         }
     }
+    static async addHomestay(req, res) {
+        if (req.method === 'GET') {
+            let html = await BaseController.readFileData('./src/views/addHomestay.html');
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(html);
+            res.end();
+        } else {
+            let data = '';
+            req.on('data', chunk => data += chunk);
+            req.on('end', async () => {
+                data = qs.parse(data);
+                let {name, city, bedrooms, wcrooms, price, describeHomestay} = data;
+                await homestayModel.addHomestay(name, +city, +bedrooms, +wcrooms, +price, describeHomestay).catch(err => {
+                    res.writeHead(301, {location: '/add'});
+                    res.end();
+                });
+                res.writeHead(301, {location: '/'});
+                res.end();
+            })
+
+        }
+    }
 }
 module.exports = HomeStayController;
