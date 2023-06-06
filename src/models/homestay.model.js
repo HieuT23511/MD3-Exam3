@@ -10,10 +10,14 @@ class HomeStayModel extends DatabaseModel {
         return await DatabaseModel.querySql(sql);
     }
 
-    static async addHomestay(name, city, bedrooms, price, wcrooms, describeHomestay) {
-        let sql = `insert into Homestay (name, city, bedrooms, price, wcrooms,describeHomestay)
-values ('${name}', '${city}', '${bedrooms}', '${price}', '${wcrooms}' , '${describeHomestay}');`
-        return await DatabaseModel.querySql(sql);
+    async addHomestay(name, city, bedrooms, price, wcrooms, describeHomestay) {
+        let sql = `insert into Homestay (name, city, bedrooms, price, wcrooms, describeHomestay)
+values ('${name}', '${city}', ${bedrooms}, ${price}, ${wcrooms} , '${describeHomestay}');`
+       await DatabaseModel.querySql(sql);
+    }
+    async deleteHomestay (idHomestay){
+        let sql = `delete from Homestay where idHomestay = ${idHomestay}`
+        await DatabaseModel.querySql(sql);
     }
 }
 module.exports = new HomeStayModel;

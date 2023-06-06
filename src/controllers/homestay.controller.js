@@ -17,8 +17,8 @@ class HomeStayController {
                 newHtml += `<td>${homestay.city}</td>`;
                 newHtml += `<td>${homestay.price.toLocaleString()} VND</td>`;
                 newHtml += `<td>
-                <button class="btn btn-outline-primary"><a href='/update?id=${homestay.id}'">Sửa</a></button>
-                <button class="btn btn-outline-danger"><a href='/delete?id=${homestay.id}'">Xóa</a></button>
+                <button class="btn btn-outline-primary"><a href='/update?id=${homestay.idHomestay}'">Sửa</a></button>
+                <button class="btn btn-outline-danger"><a href='/delete?id=${homestay.idHomestay}'">Xóa</a></button>
                 </td>`
             });
             let html = await BaseController.readFileData('./src/views/listHomestay.html');
@@ -61,15 +61,28 @@ class HomeStayController {
             req.on('data', chunk => data += chunk);
             req.on('end', async () => {
                 data = qs.parse(data);
-                let {name, city, bedrooms, wcrooms, price, describeHomestay} = data;
-                await homestayModel.addHomestay(name, +city, +bedrooms, +wcrooms, +price, describeHomestay).catch(err => {
+                let {name, city, bedrooms, price, wcrooms, describeHomestay} = data;
+                console.log(data)
+                await homestayModel.addHomestay(name, city, bedrooms, price, wcrooms, describeHomestay).catch(err => {
                     res.writeHead(301, {location: '/add'});
                     res.end();
                 });
-                res.writeHead(301, {location: '/'});
+                res.writeHead(301, {location: '/home'});
                 res.end();
             })
-
+        }
+    }
+    static async deleteHomestay(req, res) {
+        let query = qs.parse(url.parse(req.url).query);
+        if (req.method === "GET") {
+            let html = await BaseController.readFileData('./src/views/deleteHomestay.html');
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(html);
+            res.end();
+        } else {
+            await homestayModel.deleteHomestay(+query.id).catch(err => console.log(err));
+            res.writeHead(301, {location: '/home'});
+            res.end();
         }
     }
 }

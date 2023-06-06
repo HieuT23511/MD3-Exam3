@@ -10,10 +10,11 @@ const server = http.createServer((req,res)=>{
     chosenRouter(req, res).catch(err => console.log(err.message));
 })
 server.listen(port,"localhost",()=>{
-    console.log(`Server is running at http://localhost:${port}`)
+    console.log(`Server is running at http://localhost:${port}/home`)
 })
 router = {
     '/home': homestayController.getDisplayHomestayPage,
     '/detail': homestayController.getDetailPage,
-    '/add': homestayController.addHomestay
+    '/add': homestayController.addHomestay,
+    '/delete': homestayController.deleteHomestay
 }
