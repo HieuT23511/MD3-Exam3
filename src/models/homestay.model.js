@@ -11,7 +11,7 @@ class HomeStayModel extends DatabaseModel {
     }
 
     static async addHomestay(name, city, bedrooms, price, wcrooms, describeHomestay) {
-        let sql = `insert into User (name, city, bedrooms, price, wcrooms,describeHomestay)
+        let sql = `insert into Homestay (name, city, bedrooms, price, wcrooms,describeHomestay)
 values ('${name}', '${city}', '${bedrooms}', '${price}', '${wcrooms}' , '${describeHomestay}');`
         return await DatabaseModel.querySql(sql);
     }
