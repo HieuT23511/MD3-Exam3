@@ -6,7 +6,7 @@ class DatabaseModel {
             host: 'localhost',
             user: 'root',
             password: 'S300pmu1',
-            database: 'homestaySQL',
+            database: 'HomeStay',
             charset: 'utf8_general_ci'
         });
     }
@@ -20,5 +20,4 @@ class DatabaseModel {
         });
     }
 }
-
 module.exports = DatabaseModel;

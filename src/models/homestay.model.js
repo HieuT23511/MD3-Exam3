@@ -1,15 +1,20 @@
 let DatabaseModel = require('./database.model');
-
-class HomestayModel extends DatabaseModel {
-    static async getAllHomestay() {
-        let sql = 'select * from infoHomestay';
+class HomeStayModel extends DatabaseModel {
+    async getAllHomestay() {
+        let sql = `SELECT * FROM Homestay`;
         return await DatabaseModel.querySql(sql);
     }
+
+    async getDetailHomestay(id) {
+        let sql = `SELECT * FROM Homestay`
+        return await DatabaseModel.querySql(sql);
+    }
+
     static async addHomestay(name, city, bedrooms, price, wcrooms, describeHomestay) {
-        let sql = `insert into User (name, city, bedrooms, price, wcrooms,describeHomestay) 
-values ('${name}', '${city}', '${bedrooms}', '${price}', '${wcroom}' , '${describeHomestay}');`
-        await DatabaseModel.querySql(sql);
+        let sql = `insert into User (name, city, bedrooms, price, wcrooms,describeHomestay)
+values ('${name}', '${city}', '${bedrooms}', '${price}', '${wcrooms}' , '${describeHomestay}');`
+        return await DatabaseModel.querySql(sql);
     }
 }
+module.exports = new HomeStayModel;
 
-module.exports = HomestayModel;
